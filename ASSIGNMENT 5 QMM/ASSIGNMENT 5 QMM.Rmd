@@ -1,0 +1,74 @@
+---
+title: "ASSIGNMENT 5"
+author: "MADHUKAR HEEREKAR"
+date: '2022-11-06'
+output: pdf_document
+---
+
+The Research and Development Division of the Emax Corporation has developed three new 
+products. A decision now needs to be made on which mix of these products should be produced. Management wants primary consideration given to three factors: total profit, stability in the workforce, and achieving an increase in the company’s earnings next year from the $75 million achieved this year.
+
+***Objective Function***
+\newline
+*Maximize Z = P - 6C - 3D, where*
+\newline
+*P = Total discounted profit over the life of the new products,*
+\newline
+*C = Change in either direction towards the current level of employment,*
+\newline
+*D = decrease if any in next year’s earnings from the current year’s level.*
+\newline
+
+Loading required packages
+```{r}
+library(lpSolve)
+library(lpSolveAPI)
+```
+
+*Loading the LP file from the current directory and printing the model*\vspace{1mm}
+\newline
+*Defining y1p and y1m as the amount over (if any) and the amount under (if any) the employment level goal.*\vspace{1mm}
+\newline
+*Defining y2p and y2m in the same way for the goal regarding earnings next year.*\vspace{1mm}
+\newline
+*Define x1, x2 and x3 as the production rates of Products 1, 2, and 3, respectively.*\vspace{1mm}
+\newline
+*Also expressing P in terms of x1, x2 and x3 and the objective function in terms of x1, x2, x3, y1p, y1m , y2p and y2m*
+
+
+```{r}
+emax_rd <- read.lp("emax.lp")
+print(emax_rd)
+```
+
+*The impact of each of the new products (per unit rate of production) on each of these factors is shown in the following table:*
+
+```{r}
+table_emax <- matrix(c("Total Profit", "Employment Level", "Earnings Next Year",
+                       20,6,8,
+                       15,4,7,
+                       25,5,5,
+                       "Maximize","=50",">=75",
+                       "Millions of Dollars", "Hundreds of Employees", "Millions of Dollars"), ncol=6, byrow = F)
+
+colnames(table_emax) <- c("Factor","Product 1", "Product 2", "Product 3", "Goal", "Units")
+
+as.table(table_emax)
+```
+
+*Solving the goal programming model to obtain the objective and variable values*
+```{r}
+solve(emax_rd)
+get.objective(emax_rd)
+get.variables(emax_rd)
+```
+
+Interpretation:
+1.The units of combination that the corporation must utilize in order to maximize the target function are X1 - Product 1, X2 - Product 2, and X3 - Product 3. It argues that because the final result is zero, 20 units of Product 1 and 15 units of Product 2 cannot be produced in the expected manner. Because of a change in X3, the only product that can currently be made is product 3.
+***15 Units of Product 3 to maximize the profit.***\vspace{2mm}
+
+2. The company's primary goal was to stabilize employment levels by capping the maximum number of employees at 500. Instead, the company's employment levels were exceeded by 250 people (Y1P). The corporation must pay a penalty because of the rise in personnel numbers.
+
+3. The major purpose of Y2P and Y2M was to predict whether wages will rise or fall in the next year. As the present level is "0," it is apparent that there is no rise or decrease in the next year's profits. 
+
+4. The profit that the business seeks to maximize is 225 million dollars, as shown by the objective function value.
