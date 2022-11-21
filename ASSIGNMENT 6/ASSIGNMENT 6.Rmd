@@ -1,0 +1,38 @@
+---
+title: "ASSIGNMENT 6"
+author: "HEEREKAR MADHUKAR"
+date: "2022-11-21"
+output: pdf_document
+---
+
+```{r}
+library(lpSolve)
+library(lpSolveAPI)
+A <- read.lp("C://Users//heere//OneDrive//Documents//QMM//ASSIGNMENT 6//ap.lp")
+A
+
+solve(A)
+
+get.objective(A)
+
+#The $25,675 minimum wage expense comes to a total.
+
+get.variables(A)
+
+tableno21 <- matrix(c(0,4,5,0,8,1,0,0,0,5,0,8,1,13,2,0,0,0,8,1,13,2,4,0,0,8,1,13,2,4,5,0,0,1,13,2,3,4,0,0,0,13,2,4,5,0,8,0,0), ncol=7,byrow=TRUE)
+
+colnames(tableno21)<- c('Sun/Mon', 'Mon/Tue','Tue/Wed', 'Wed/Thur', 'Thur/Fri', 'Fri/Sat', 'Sat/Sun')
+
+row.names(tableno21) <- c('Sunday', 'Monday', 'Tuesday','Wednesda','Thursday','Friday','Saturday')
+
+tableno21
+
+#I entered the lp model variables into the schedule to determine the best option that reduces the overall pay expense.
+
+rowSums(tableno21)
+
+#This chart displays the amount of employees who are available each day based on the shift arrangement that reduces the overall wage cost.
+
+
+```
+
